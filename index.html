@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Growth Sentence Builder</title>
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/css/tom-select.css" rel="stylesheet">
+  
+  
+<!-- Tippy.js core + Popper -->
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+
+<!-- Themes -->
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css">
+
+<!-- Animations (this is the missing piece) -->
+<!-- <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/shift-away.css"> -->
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale-subtle.css">
+<!-- Optional: load more if you want to experiment -->
+<!-- <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css"> -->
+
+	<!-- Your existing Tom Select CSS/JS -->
+	<link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/css/tom-select.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/js/tom-select.complete.min.js"></script>
+
+  
+  <style>
+	/* ***** THEME TOGGLER INITIALIZATION ***** */
+	
+	:root {
+	  /* Default = Blue theme */
+	  --accent: #4299e1;
+	  --accent-dark: #2b6cb0;
+	  --preview-bg: #ebf8ff;
+	  --preview-border: #4299e1;
+	  --top-gradient: rgb(3 123 184 / 91%);
+      --select-bg: #ebf8ff;
+	  --select-color: #2b6cb0;
+	  --select-og-header-bg: #0092d0;
+	  --select-og-header-color: #80daff;
+	}
+
+	body.theme-green {
+	  --accent: #64e142;
+	  --accent-dark: #32b02b;
+	  --preview-bg: #f3ffeb;
+	  --preview-border: #64e142;
+	  --top-gradient: rgb(0 172 6);
+      --select-bg: #efffeb;
+	  --select-color: #3ba203;
+	  --select-og-header-bg: rgb(19 173 24);
+	  --select-og-header-color: #77ea65;
+	}
+
+	body.theme-chiffon {
+	  --accent: #ffebb8;
+	  --accent-dark: #fadb28;
+	  --preview-bg: rgb(255 250 239);
+	  --preview-border: #ffecac;
+	  --top-gradient: #fff0ab;
+      --select-bg: #fff9f0;
+	  --select-color: #ffcc23;
+	  --select-og-header-bg: gb(255 234 132);
+	  --select-og-header-color: #ebc33f;
+	}
+	
+	/* Preview box now uses variables */
+	.preview-box {
+	  margin-top: 30px;
+	  padding: 24px;
+	  background: var(--preview-bg);
+	  border-radius: 12px;
+	  border-left: 5px solid var(--preview-border);
+	}
+
+	.preview-box h2 {
+	  margin: 0 0 12px 0;
+	  font-size: 1.1rem;
+	  color: var(--accent-dark);
+	}
+
+	/* Optional: make focus rings and other accents follow the theme */
+	.ts-wrapper.focus .ts-control {
+	  border-color: var(--accent);
+	  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+	}
+
+	.lib-name:hover {
+	  color: var(--accent);
+	  border-bottom-color: var(--accent);
+	}
+  </style>
+  
+  <style>
+   /* ***** MAIN PAGE STYLE ***** */
+   
+    * {
+      box-sizing: border-box;
+    }
+	
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      color: #2c3e50;
+      line-height: 1.6;
+	  overflow: hidden;
+    }
+	
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      padding: 40px 40px 20px 40px;
+    }
+	
+	/* 🌟 The Subtle Silver Horizontal Gradient */
+	.container::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 15%; /* Keeps it centered and tucked in from the edges */
+		width: 70%;
+		height: 25px;
+		/*background: linear-gradient(
+			to right, rgba(255, 255, 255, 0) 0%,
+			rgb(0 172 6) 50%, 
+			rgba(255, 255, 255, 0) 100%
+		);*/
+
+		background: linear-gradient(
+			to right, rgba(255, 255, 255, 0) 0%,
+			var(--top-gradient) 50%, 
+			rgba(255, 255, 255, 0) 100%
+		);
+	}
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      color: #1a365d;
+      margin-bottom: 8px;
+      font-size: 1.8rem;
+    }
+	
+    .subtitle {
+      text-align: center;
+      color: #718096;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+	
+    .sentence {
+      font-size: 1.25rem;
+      line-height: 2.2;
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 24px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+	
+    .ts-wrapper {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0px 4px 4px 4px;
+      min-width: 140px;
+      max-width: 200px;
+    }
+	
+	/* 1. Locks the outer wrapper to 100% or your exact layout width */
+	.ts-wrapper.single {
+	  width: 200px !important; /* Change to a fixed px width if preferred */
+	  max-width: 100%;
+	}
+
+	/* 2. Keeps the main bar a constant size and prevents wrapping items */
+	.ts-wrapper.single .ts-control {
+	  display: flex !important;
+	  align-items: center;
+	  flex-wrap: nowrap !important; /* 👈 Crucial: Stops the layout from dropping lines or expanding */
+	  overflow: hidden;
+	  height: 38px;                 /* Match this to your theme's native height */
+	  box-sizing: border-box;
+	}
+
+	/* Force long selected badges to cut off with an ellipsis (...) */
+	.ts-control .item {
+		max-width: 60%; /* Adjust percentage based on your design */
+		white-space: nowrap;
+		
+		/* This solved the long word causing a new line for the cursor when there was plenty of space remaining */
+		overflow: visible;
+		text-overflow: ellipsis;
+	}
+		
+		
+	/* Prevent the box from wrapping items to multiple lines */
+	.ts-control {
+		flex-wrap: nowrap !important;
+		overflow: hidden;
+	}	
+		
+	
+	/* Fixes Tom Select container collapse when empty */
+	.ts-control {
+		min-height: 36px; /* Matches standard input heights like Bootstrap */
+		display: flex;
+		align-items: center;
+	}
+	
+    .ts-wrapper .ts-control {
+      border-radius: 8px;
+      border: 2px solid #cbd5e0;
+      padding: 6px 10px;
+      font-size: 1.1rem;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+	
+
+	
+    .ts-wrapper .ts-control input {
+      font-size: 1rem;
+    }
+	
+    .ts-dropdown {
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      font-size: 0.95rem;
+    }
+	
+    .ts-dropdown .optgroup-header {
+      background: var(--select-og-header-bg);
+      color: var(--select-og-header-color);
+      font-weight: 600;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+	
+    .ts-dropdown .option {
+      padding: 8px 12px;
+    }
+	
+    .ts-dropdown .option.active {
+      background: var(--select-bg);
+      color: var(--select-color);
+    }
+	
+	
+    #live-sentence {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: #2c3e50;
+      font-style: italic;
+    }
+	
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #a0aec0;
+    }
+	
+    .credits {
+		text-align: center;
+		font-size: 0.85rem;
+		color: #a0aec0;
+		position: relative;  /* 🌟 Crucial: This locks the silver line exactly to this text block! */
+	}
+
+	.oss-credit {
+		display: block;
+		margin-top: 6px;
+		font-size: 0.78rem;
+		color: #c5c7c9; /* Fixed your duplicate ## typo */
+		letter-spacing: 0.01em;
+	}
+
+	
+	/* 🌟 The Silver Gradient Line (Now perfectly positioned) */
+	.credits::after {
+		content: "";
+		position: absolute;
+		top: 0;             /* Places it at the very top edge of the credits block */
+		left: 29%;
+		width: 40%;
+		height: 18px;
+		background: linear-gradient(
+			to right, rgba(255, 255, 255, 0) 0%,
+			rgb(255 255 255 / 70%) 50%, 
+			rgba(255, 255, 255, 0) 100% /* Fixed to 100% */
+		);
+		z-index: -1;
+	}
+  </style>
+  
+  <style>
+	/* ***** TIPPY TOOL TIP CUSTOMIZATIONS ***** */
+	.tippy-box[data-theme~='default']{
+		background:#424557;box-shadow:0 0 4px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.05);
+	}
+	.tippy-box[data-theme~='material']{
+		background-color:#505355;
+		font-weight:600;
+	}
+	.tippy-box[data-theme~='kentucky']{
+		border: 1px solid #65b3fe;
+		background: rgb(16 94 208);
+		color: #f9fcff;
+		margin: 0 0 0 5px;
+	}
+	
+	/* Matches the arrow color to the danger box background */
+	.tippy-box[data-theme~='kentucky'] .tippy-arrow::before {
+	  color: #0067cb;
+	}
+	
+	.tippy-box[data-theme~='kermit']{
+	    border: 1px solid #4fd826;
+		background: rgb(26 193 40);
+		color: #f9fcff;
+		margin: 0 0 0 5px;
+	}
+	
+	/* Matches the arrow color to the danger box background */
+	.tippy-box[data-theme~='kermit'] .tippy-arrow::before {
+	  color: #fff0ab;
+	}
+	
+	.tippy-box[data-theme~='chiffon']{
+		border: 1px solid #fff0ab;
+		background: #fefefe;
+		color: #f1ba00;
+		margin: 0 0 0 5px;
+	}
+	
+	/* Matches the arrow color to the danger box background */
+	.tippy-box[data-theme~='chiffon'] .tippy-arrow::before {
+	  color: #fff0ab;
+	}
+	
+	.tippy-box[data-theme~='credits']{
+		background: #ffffff;
+		box-shadow: 0 0 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+		color: #7c7f82;
+	}
+	
+	/* Matches the arrow color to the danger box background */
+	.tippy-box[data-theme~='credits'][data-placement^='top'] > .tippy-arrow::before {
+	  color: #fff;
+	}
+	.tippy-box[data-theme~='credits'][data-placement^='bottom'] > .tippy-arrow::before {
+	  color: #fff;
+	}
+	.tippy-box[data-theme~='credits'][data-placement^='left'] > .tippy-arrow::before {
+	  color: #fff;
+	}
+	.tippy-box[data-theme~='credits'][data-placement^='right'] > .tippy-arrow::before {
+	  color: #fff;
+	}
+	
+	
+	.tippy-box[data-theme~='light-blue']{
+		border: 1px solid #8ed7fa;
+		background: rgb(255, 255, 255);
+		color: #2b6cb0;
+		/* min-width: 350px;
+		max-width: 350px; */
+		margin: 0 0 0 5px;
+	}
+	
+	/* Matches the arrow color to the danger box background */
+	.tippy-box[data-theme~='light-blue'] .tippy-arrow::before {
+	  color: #2b6cb0;
+	}
+	
+	
+	/* First theme: Light Blue */
+	.tippy-box[data-theme~='info-theme'] {
+	  background-color: #3182ce;
+	  color: white;
+	}
+
+	/* Second theme: Dark Red */
+	.tippy-box[data-theme~='danger-theme'] {
+	  background-color: #e53e3e;
+	  color: white;
+	}
+	
+	.tippy-arrow {
+		width: 16px;
+		height: 16px;
+		color:  #0067cb; // Light-blue: #84c2fffa;
+		transform: translate(-1px, 7px) !important;
+	}
+	.tippy-box {
+	  min-width: 0px;       /* Allows shrinking to 0px if content is empty */
+	  max-width: 380px;     /* Sets upper limit before text wrapping triggers */
+	  width: max-content;   /* Forces the box to tightly hug the text width */
+	}
+
+	.lib-name {
+	  cursor: help;
+	  border-bottom: 1px dotted #a0aec0;
+	  transition: color 0.2s, border-color 0.2s;
+	}
+  </style>
+  
+  <style>
+	/* ***** THEME TOGGLER ***** */
+	.theme-switcher {
+	  position: fixed;
+	  top: 18px;
+	  right: 18px;
+	  display: flex;
+	  gap: 6px;
+	  z-index: 1000;
+	  background: rgba(255, 255, 255, 0.85);
+	  backdrop-filter: blur(8px);
+	  padding: 6px;
+	  border-radius: 12px;
+	  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+	  border: 1px solid #e2e8f0;
+	}
+
+	.theme-btn.green {
+	  border: 1px solid rgb(255,255,255);
+	  background: transparent;
+	  padding: 6px 12px;
+	  border-radius: 8px;
+	  font-size: 0.85rem;
+	  font-weight: 500;
+	  color: #4a5568;
+	  cursor: pointer;
+	  transition: all 0.2s;
+	  display: flex;
+	  align-items: center;
+	  gap: 6px;
+	}
+
+	.theme-btn.green:hover {
+	  background: #64e142;
+	  border: 1px solid rgb(42 203 24);
+	  color: white;
+	}	
+	
+	.theme-btn.green.active {
+	  background: #64e142;
+	  color: white;
+	}
+	
+	.theme-btn.blue {
+	  border: 1px solid rgb(255,255,255);
+	  background: transparent;
+	  padding: 6px 12px;
+	  border-radius: 8px;
+	  font-size: 0.85rem;
+	  font-weight: 500;
+	  color: #4a5568;
+	  cursor: pointer;
+	  transition: all 0.2s;
+	  display: flex;
+	  align-items: center;
+	  gap: 6px;
+	}
+	
+	.theme-btn.blue.active {
+	  background: #4299e1;
+	  border: 1px solid #4299e1;
+	  color: white;
+	}
+	
+	.theme-btn.blue:hover {
+	  background: #4299e1;
+	  color: white;
+	}
+	
+	.theme-btn.chiffon {
+	  border: 1px solid rgb(255,255,255);
+	  background: transparent;
+	  padding: 6px 12px;
+	  border-radius: 8px;
+	  font-size: 0.85rem;
+	  font-weight: 500;
+	  color: #4a5568;
+	  cursor: pointer;
+	  transition: all 0.2s;
+	  display: flex;
+	  align-items: center;
+	  gap: 6px;
+	}
+	
+	.theme-btn.chiffon.active {
+		background: #fff8d9;
+		border: 1px solid #ffe345;
+		color: #d7b006;
+	}
+	
+	.theme-btn.chiffon:hover {
+	  background: #fff0ab;
+	  color: white;
+	}
+	
+	.theme-btn:hover,
+	.theme-btn.active {
+	  background: var(--accent);
+	  color: white;
+	}
+
+	.custom-color input[type="color"] {
+	  width: 18px;
+	  height: 18px;
+	  border: none;
+	  padding: 0;
+	  background: none;
+	  cursor: pointer;
+	}
+  </style>
+</head>
+<body>
+
+	<div class="theme-switcher">
+	  <button class="theme-btn blue" data-theme="blue" title="Blue theme">Blue</button>
+	  <button class="theme-btn green" data-theme="green" title="Green theme">Green</button>
+	  <button class="theme-btn chiffon" data-theme="chiffon" title="Chiffon theme">Chiffon</button>
+	  <label class="theme-btn custom-color" title="Custom color">
+		<input type="color" id="customColor" value="#4299e1">
+		<span>Custom</span>
+	  </label>
+	</div>
+	
+	<div class="container">
+		<h1>Growth Affirmation Builder</h1>
+		<p class="subtitle">Select words for each blank to complete your personal growth sentence</p>
+
+		<div class="sentence">
+		  If I am to be
+		  <select id="blank1" placeholder="appreciated..."></select>
+		  for the
+		  <select id="blank2" placeholder="virtuous..."></select>
+		  aspects of my
+		  <select id="blank3" placeholder="presence..."></select>,
+		  <select id="blank4" placeholder="demeanor..."></select>
+		  and
+		  <select id="blank5" placeholder="behavior..."></select>...
+		  if at any moment I attempt to not face the parts that are
+		  <select id="blank6" placeholder="could use growth..."></select>
+		  then I would be responsible for inhibiting my own growth.
+		</div>
+
+		<div class="preview-box">
+		  <h2>Your Completed Sentence</h2>
+		  <p id="live-sentence">Select options above to build your affirmation...</p>
+		</div>
+
+		<p class="footer">© 2026 Loy41 • Choose wisely and grow</p>
+	</div>
+
+		<!-- Add this right after your existing footer text -->
+		<p class="credits">
+		  <span class="oss-credit">
+			Built with Open Source
+			<span class="lib-name" data-lib="tom-select">Tom Select</span>
+			& 
+			<span class="lib-name" data-lib="tippy">Tippy.js</span>
+		  </span>
+		</p>
+
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/js/tom-select.complete.min.js"></script>
+  
+  <script>const selectData = {
+  // ============================================================
+  // BLANK 1 – “appreciated…”
+  // ============================================================
+  blank1: [
+    // High Honor & Respect
+    { value: "Revered",     text: "Revered",     optgroup: "High Honor & Respect",     definition: "Deeply respected and admired." },
+    { value: "Esteemed",    text: "Esteemed",    optgroup: "High Honor & Respect",     definition: "Held in high regard." },
+    { value: "Venerated",   text: "Venerated",   optgroup: "High Honor & Respect",     definition: "Honored with ritualistic respect." },
+    { value: "Exalted",     text: "Exalted",     optgroup: "High Honor & Respect",     definition: "Placed in a high position." },
+    { value: "Lauded",      text: "Lauded",      optgroup: "High Honor & Respect",     definition: "Highly praised and celebrated." },
+
+    // Community Validation
+    { value: "Appreciated", text: "Appreciated", optgroup: "Community Validation",    definition: "Recognized and valued for one’s positive qualities or contributions." },
+    { value: "Recognized",  text: "Recognized",  optgroup: "Community Validation",    definition: "Acknowledged for your worth." },
+    { value: "Valued",      text: "Valued",      optgroup: "Community Validation",    definition: "Seen as highly important." },
+    { value: "Commended",   text: "Commended",   optgroup: "Community Validation",    definition: "Formally praised for actions." },
+    { value: "Acclaimed",   text: "Acclaimed",   optgroup: "Community Validation",    definition: "Publicly cheered and approved." },
+    { value: "Applauded",   text: "Applauded",   optgroup: "Community Validation",    definition: "Noted with strong approval." },
+
+    // Deep Connection & Family
+    { value: "Cherished",   text: "Cherished",   optgroup: "Deep Connection & Family", definition: "Loved and protected dearly." },
+    { value: "Treasured",   text: "Treasured",   optgroup: "Deep Connection & Family", definition: "Kept close like a prize." },
+    { value: "Prized",      text: "Prized",      optgroup: "Deep Connection & Family", definition: "Valued as highly important." },
+    { value: "Endeared",    text: "Endeared",    optgroup: "Deep Connection & Family", definition: "Held dear in hearts." },
+    { value: "Beloved",     text: "Beloved",     optgroup: "Deep Connection & Family", definition: "Dearly loved by others." },
+
+    // Validation of Character
+    { value: "Validated",   text: "Validated",   optgroup: "Validation of Character", definition: "Confirmed as right or worthy." },
+    { value: "Admired",     text: "Admired",     optgroup: "Validation of Character", definition: "Looked at with total approval." },
+    { value: "Honored",     text: "Honored",     optgroup: "Validation of Character", definition: "Given special respect or credit." },
+    { value: "Accepted",    text: "Accepted",    optgroup: "Validation of Character", definition: "Welcomed fully into the group." },
+    { value: "Celebrated",  text: "Celebrated",  optgroup: "Validation of Character", definition: "Maintained as a point of pride." }
+  ],
+
+  // ============================================================
+  // BLANK 2 – “virtuous…”
+  // ============================================================
+  blank2: [
+    // Joyful & Positive Energy
+    { value: "Joyful",        text: "Joyful",        optgroup: "Joyful & Positive Energy",     definition: "Full of joy and gladness." },
+    { value: "Cheerful",      text: "Cheerful",      optgroup: "Joyful & Positive Energy",     definition: "Noticeably happy and optimistic." },
+    { value: "Radiant",       text: "Radiant",       optgroup: "Joyful & Positive Energy",     definition: "Glowing with happiness or health." },
+    { value: "Uplifting",     text: "Uplifting",     optgroup: "Joyful & Positive Energy",     definition: "Raising the spirits of others." },
+    { value: "Optimistic",    text: "Optimistic",    optgroup: "Joyful & Positive Energy",     definition: "Hopeful and confident about the future." },
+    { value: "Vibrant",       text: "Vibrant",       optgroup: "Joyful & Positive Energy",     definition: "Full of energy and life." },
+    { value: "Exuberant",     text: "Exuberant",     optgroup: "Joyful & Positive Energy",     definition: "Filled with lively energy and excitement." },
+    { value: "Effervescent",  text: "Effervescent",  optgroup: "Joyful & Positive Energy",     definition: "Bubbly, vivacious, and sparkling." },
+    { value: "Buoyant",       text: "Buoyant",       optgroup: "Joyful & Positive Energy",     definition: "Cheerfully resilient and light-hearted." },
+    { value: "Animated",      text: "Animated",      optgroup: "Joyful & Positive Energy",     definition: "Lively and full of spirit." },
+
+    // Pleasant & Harmonious
+    { value: "Pleasant",      text: "Pleasant",      optgroup: "Pleasant & Harmonious",        definition: "Giving a sense of happy satisfaction." },
+    { value: "Delightful",    text: "Delightful",    optgroup: "Pleasant & Harmonious",        definition: "Highly pleasing and charming." },
+    { value: "Graceful",      text: "Graceful",      optgroup: "Pleasant & Harmonious",        definition: "Elegant and refined in movement or manner." },
+    { value: "Harmonious",    text: "Harmonious",    optgroup: "Pleasant & Harmonious",        definition: "Forming a pleasing or consistent whole." },
+    { value: "Serene",        text: "Serene",        optgroup: "Pleasant & Harmonious",        definition: "Calm, peaceful, and untroubled." },
+    { value: "Tranquil",      text: "Tranquil",      optgroup: "Pleasant & Harmonious",        definition: "Free from disturbance; calm." },
+    { value: "Amiable",       text: "Amiable",       optgroup: "Pleasant & Harmonious",        definition: "Having a friendly and pleasant manner." },
+    { value: "Cordial",       text: "Cordial",       optgroup: "Pleasant & Harmonious",        definition: "Warm and friendly." },
+    { value: "Melodious",     text: "Melodious",     optgroup: "Pleasant & Harmonious",        definition: "Pleasant-sounding; tuneful." },
+    { value: "Pacifying",     text: "Pacifying",     optgroup: "Pleasant & Harmonious",        definition: "Tending to calm or soothe." },
+
+    // Loving & Caring  ← new words sorted here
+    { value: "Loving",            text: "Loving",            optgroup: "Loving & Caring", definition: "Feeling or showing deep affection." },
+    { value: "Compassionate",     text: "Compassionate",     optgroup: "Loving & Caring", definition: "Feeling deep sympathy and a desire to alleviate suffering." },
+    { value: "Warm",              text: "Warm",              optgroup: "Loving & Caring", definition: "Friendly, kind, and affectionate." },
+    { value: "Kind",              text: "Kind",              optgroup: "Loving & Caring", definition: "Having a gentle, caring nature." },
+    { value: "Empathetic",        text: "Empathetic",        optgroup: "Loving & Caring", definition: "Able to understand and share the feelings of others." },
+    { value: "Nurturing",         text: "Nurturing",         optgroup: "Loving & Caring", definition: "Caring for and encouraging growth." },
+    { value: "Benevolent",        text: "Benevolent",        optgroup: "Loving & Caring", definition: "Well-meaning and kindly." },
+    { value: "Affectionate",      text: "Affectionate",      optgroup: "Loving & Caring", definition: "Readily showing fondness or tenderness." },
+    { value: "Altruistic",        text: "Altruistic",        optgroup: "Loving & Caring", definition: "Showing unselfish concern for the welfare of others." },
+    { value: "Thoughtful",        text: "Thoughtful",        optgroup: "Loving & Caring", definition: "Showing consideration for the needs of others." },
+    { value: "Considerate",       text: "Considerate",       optgroup: "Loving & Caring", definition: "Careful not to cause inconvenience or hurt." },
+    { value: "Vulnerable",        text: "Vulnerable",        optgroup: "Loving & Caring", definition: "Open and emotionally available." },
+    // —— newly added ——
+    { value: "Courteous",         text: "Courteous",         optgroup: "Loving & Caring", definition: "Polite, respectful, and following good manners." },
+    { value: "Attentive",         text: "Attentive",         optgroup: "Loving & Caring", definition: "Watching and listening closely to notice others’ needs." },
+    { value: "Solicitous",        text: "Solicitous",        optgroup: "Loving & Caring", definition: "Showing active, hovering concern for someone’s well-being." },
+    { value: "Magnanimous",       text: "Magnanimous",       optgroup: "Loving & Caring", definition: "Noble, forgiving, and incredibly generous in spirit." },
+    { value: "Beneficent",        text: "Beneficent",        optgroup: "Loving & Caring", definition: "Actively performing acts of kindness or charity." },
+    { value: "Self-sacrificing",  text: "Self-sacrificing",  optgroup: "Loving & Caring", definition: "Forgoing one’s own interests or comfort for others." },
+    { value: "Devoted",           text: "Devoted",           optgroup: "Loving & Caring", definition: "Completely loyal and dedicated to caring for someone." },
+    { value: "All-consuming",     text: "All-consuming",     optgroup: "Loving & Caring", definition: "Total dedication where your entire effort serves others." },
+
+    // Disciplined & Strong Character
+    { value: "Disciplined",     text: "Disciplined",     optgroup: "Disciplined & Strong Character", definition: "Showing controlled behavior and self-restraint." },
+    { value: "Mindful",         text: "Mindful",         optgroup: "Disciplined & Strong Character", definition: "Consciously aware and present." },
+    { value: "Respectful",      text: "Respectful",      optgroup: "Disciplined & Strong Character", definition: "Showing regard and consideration." },
+    { value: "Authentic",       text: "Authentic",       optgroup: "Disciplined & Strong Character", definition: "True to one’s own personality and values." },
+    { value: "Virtuous",        text: "Virtuous",        optgroup: "Disciplined & Strong Character", definition: "Having high moral standards." },
+    { value: "Resolute",        text: "Resolute",        optgroup: "Disciplined & Strong Character", definition: "Admirably purposeful and determined." },
+    { value: "Principled",      text: "Principled",      optgroup: "Disciplined & Strong Character", definition: "Acting in accordance with morality." },
+    { value: "Steadfast",       text: "Steadfast",       optgroup: "Disciplined & Strong Character", definition: "Firm and unwavering." },
+    { value: "Conscientious",   text: "Conscientious",   optgroup: "Disciplined & Strong Character", definition: "Wishing to do what is right; diligent." },
+    { value: "Cultivating",     text: "Cultivating",     optgroup: "Disciplined & Strong Character", definition: "Actively developing good qualities." },
+    { value: "Indefatigable",   text: "Indefatigable",   optgroup: "Disciplined & Strong Character", definition: "Persisting tirelessly." },
+    { value: "Honorable",       text: "Honorable",       optgroup: "Disciplined & Strong Character", definition: "Bringing or worthy of honor." },
+    { value: "Relentless",      text: "Relentless",      optgroup: "Disciplined & Strong Character", definition: "Unceasingly intense or determined." },
+    { value: "Assiduous",       text: "Assiduous",       optgroup: "Disciplined & Strong Character", definition: "Showing great care and perseverance." }
+  ],
+
+  // ============================================================
+  // BLANK 3, 4, 5 – presence / demeanor / behavior
+  // (identical lists)
+  // ============================================================
+  blank3: [
+    // Presence & Being
+    { value: "Presence",     text: "Presence",     optgroup: "Presence & Being",     definition: "The state or fact of existing or being present." },
+    { value: "Aura",         text: "Aura",         optgroup: "Presence & Being",     definition: "The distinctive atmosphere or quality that seems to surround a person." },
+    { value: "Essence",      text: "Essence",      optgroup: "Presence & Being",     definition: "The intrinsic nature or indispensable quality." },
+    { value: "Being",        text: "Being",        optgroup: "Presence & Being",     definition: "Existence; the nature or essence of a person." },
+    { value: "Countenance",  text: "Countenance",  optgroup: "Presence & Being",     definition: "A person’s face or facial expression." },
+    { value: "Spirit",       text: "Spirit",       optgroup: "Presence & Being",     definition: "The non-physical part of a person; vitality." },
+    { value: "Energy",       text: "Energy",       optgroup: "Presence & Being",     definition: "The strength and vitality required for sustained activity." },
+    { value: "Radiance",     text: "Radiance",     optgroup: "Presence & Being",     definition: "A glowing quality of light or joy." },
+
+    // Demeanor & Manner
+    { value: "Demeanor",     text: "Demeanor",     optgroup: "Demeanor & Manner",    definition: "Outward behavior or bearing." },
+    { value: "Bearing",      text: "Bearing",      optgroup: "Demeanor & Manner",    definition: "A person’s way of standing or moving." },
+    { value: "Comportment",  text: "Comportment",  optgroup: "Demeanor & Manner",    definition: "Behavior; the way one conducts oneself." },
+    { value: "Manner",       text: "Manner",       optgroup: "Demeanor & Manner",    definition: "A way in which a person behaves toward others." },
+    { value: "Carriage",     text: "Carriage",     optgroup: "Demeanor & Manner",    definition: "The way a person holds and moves their body." },
+    { value: "Grace",        text: "Grace",        optgroup: "Demeanor & Manner",    definition: "Elegant and refined movement or manner." },
+    { value: "Mien",         text: "Mien",         optgroup: "Demeanor & Manner",    definition: "A person’s appearance or manner, especially as expressive of character." },
+    { value: "Deportment",   text: "Deportment",   optgroup: "Demeanor & Manner",    definition: "A person’s behavior or manners." },
+
+    // Behavior & Conduct
+    { value: "Behavior",     text: "Behavior",     optgroup: "Behavior & Conduct",   definition: "The way in which one acts or conducts oneself." },
+    { value: "Conduct",      text: "Conduct",      optgroup: "Behavior & Conduct",   definition: "The manner in which a person behaves." },
+    { value: "Actions",      text: "Actions",      optgroup: "Behavior & Conduct",   definition: "The process of doing something." },
+    { value: "Habits",       text: "Habits",       optgroup: "Behavior & Conduct",   definition: "Settled or regular tendencies or practices." },
+    { value: "Ways",         text: "Ways",         optgroup: "Behavior & Conduct",   definition: "Characteristic methods of behaving." },
+    { value: "Practices",    text: "Practices",    optgroup: "Behavior & Conduct",   definition: "The actual application or use of an idea or method." },
+    { value: "Patterns",     text: "Patterns",     optgroup: "Behavior & Conduct",   definition: "Repeated or regular ways of acting." },
+    { value: "Responses",    text: "Responses",    optgroup: "Behavior & Conduct",   definition: "Reactions to particular situations." },
+
+    // Attitude & Character
+    { value: "Attitude",     text: "Attitude",     optgroup: "Attitude & Character", definition: "A settled way of thinking or feeling." },
+    { value: "Disposition",  text: "Disposition",  optgroup: "Attitude & Character", definition: "A person’s inherent qualities of mind and character." },
+    { value: "Character",    text: "Character",    optgroup: "Attitude & Character", definition: "The mental and moral qualities distinctive to an individual." },
+    { value: "Persona",      text: "Persona",      optgroup: "Attitude & Character", definition: "The aspect of someone’s character presented to others." },
+    { value: "Poise",        text: "Poise",        optgroup: "Attitude & Character", definition: "Graceful and elegant bearing." },
+    { value: "Temperament",  text: "Temperament",  optgroup: "Attitude & Character", definition: "A person’s nature, especially as it permanently affects behavior." },
+    { value: "Nature",       text: "Nature",       optgroup: "Attitude & Character", definition: "The basic or inherent features of a person." },
+    { value: "Outlook",      text: "Outlook",      optgroup: "Attitude & Character", definition: "A person’s point of view or general attitude." }
+  ],
+
+  // blank4 and blank5 use the exact same array
+  blank4: null,   // will be assigned below
+  blank5: null,
+
+  // ============================================================
+  // BLANK 6 – “could use growth…”
+  // ============================================================
+  blank6: [
+    // Offensive & Harmful
+    { value: "Offensive",      text: "Offensive",      optgroup: "Offensive & Harmful",      definition: "Causing someone to feel deeply hurt, upset, or angry." },
+    { value: "Hurtful",        text: "Hurtful",        optgroup: "Offensive & Harmful",      definition: "Causing emotional pain." },
+    { value: "Abrasive",       text: "Abrasive",       optgroup: "Offensive & Harmful",      definition: "Showing little concern for the feelings of others; harsh." },
+    { value: "Toxic",          text: "Toxic",          optgroup: "Offensive & Harmful",      definition: "Very harmful or unpleasant in a pervasive way." },
+    { value: "Rude",           text: "Rude",           optgroup: "Offensive & Harmful",      definition: "Offensively impolite or bad-mannered." },
+
+    // Imperfect & Needing Growth
+    { value: "Flawed",         text: "Flawed",         optgroup: "Imperfect & Needing Growth", definition: "Having imperfections or weaknesses." },
+    { value: "Imperfect",      text: "Imperfect",      optgroup: "Imperfect & Needing Growth", definition: "Not perfect; faulty or incomplete." },
+    { value: "Underdeveloped", text: "Underdeveloped", optgroup: "Imperfect & Needing Growth", definition: "Not fully grown or matured." },
+    { value: "Incomplete",     text: "Incomplete",     optgroup: "Imperfect & Needing Growth", definition: "Not finished or fully formed." },
+    { value: "Immature",       text: "Immature",       optgroup: "Imperfect & Needing Growth", definition: "Not fully developed emotionally or intellectually." },
+
+    // Undisciplined & Uncontrolled
+    { value: "Undisciplined",  text: "Undisciplined",  optgroup: "Undisciplined & Uncontrolled", definition: "Lacking in discipline or self-control." },
+    { value: "Impulsive",      text: "Impulsive",      optgroup: "Undisciplined & Uncontrolled", definition: "Acting without thinking carefully." },
+    { value: "Reckless",       text: "Reckless",       optgroup: "Undisciplined & Uncontrolled", definition: "Without thinking or caring about the consequences." },
+    { value: "Uncontrolled",   text: "Uncontrolled",   optgroup: "Undisciplined & Uncontrolled", definition: "Not limited or restrained." },
+    { value: "Chaotic",        text: "Chaotic",        optgroup: "Undisciplined & Uncontrolled", definition: "In a state of complete confusion and disorder." },
+
+    // Problematic & Unrefined
+    { value: "Problematic",    text: "Problematic",    optgroup: "Problematic & Unrefined",   definition: "Constituting or presenting a problem." },
+    { value: "Unrefined",      text: "Unrefined",      optgroup: "Problematic & Unrefined",   definition: "Not elegant or cultured." },
+    { value: "Shadowed",       text: "Shadowed",       optgroup: "Problematic & Unrefined",   definition: "Containing darker, less integrated aspects." },
+    { value: "Weak",           text: "Weak",           optgroup: "Problematic & Unrefined",   definition: "Lacking strength or firmness." },
+    { value: "Defective",      text: "Defective",      optgroup: "Problematic & Unrefined",   definition: "Imperfect or faulty." }
+  ]
+};
+
+// Make blank4 and blank5 identical to blank3
+selectData.blank4 = selectData.blank3;
+selectData.blank5 = selectData.blank3;
+</script>
+  
+    <script>
+	/* ***** TIPPY.JS CONFIG ***** */
+	
+	
+		const selects = ['blank1', 'blank2', 'blank3', 'blank4', 'blank5', 'blank6'];
+		const instances = {};
+
+		selects.forEach(id => {
+		  const data = selectData[id];
+		  if (!data || !Array.isArray(data)) return;
+
+		  // Automatically build the optgroups array from the data
+		  const uniqueGroups = [...new Set(data.map(item => item.optgroup).filter(Boolean))];
+		  const optgroups = uniqueGroups.map(group => ({
+			value: group,
+			label: group
+		  }));
+
+		  instances[id] = new TomSelect(`#${id}`, {
+			options: data,
+			optgroups: optgroups,                // ← this is the missing piece
+			optgroupField: "optgroup",
+			optgroupValueField: "value",
+			optgroupLabelField: "label",
+			labelField: "text",
+			valueField: "value",
+			searchField: ["text", "definition"],
+
+			maxItems: 1,
+			closeAfterSelect: true,
+			allowEmptyOption: true,
+			create: true,
+			createOnBlur: true,
+			lockOptgroupOrder: true,             // keeps groups in the order they first appear
+			placeholder: document.getElementById(id).getAttribute('placeholder'),
+
+			render: {
+			  option: function(data, escape) {
+				return `<div data-tippy-content="${escape(data.definition || '')}">
+						  ${escape(data.text)}
+						</div>`;
+			  },
+			  item: function(data, escape) {
+				return `<div title="${escape(data.definition || '')}">${escape(data.text)}</div>`;
+			  },
+			  optgroup_header: function(data, escape) {
+				return `<div class="optgroup-header">${escape(data.label)}</div>`;
+			  }
+			},
+
+			onDropdownOpen: function() {
+			  tippy.hideAll();
+			  tippy(this.dropdown_content.querySelectorAll('[data-tippy-content]'), {
+				theme: currentTippyTheme,    /* ← dynamic theme theme: 'kentucky', 'light-blue',  */
+				arrow: true,
+				placement: 'right',
+				animation: 'scale-subtle',  /* 'shift-away',  */
+				
+				/* content: '<strong>Bolded <span style="color: aqua;">content</span></strong>', */
+				allowHTML: true, 
+				interactive: true,
+				maxWidth: 'none'
+			  });
+			}
+		  });
+		});
+		
+		
+		
+		/* ***** TIPPY.JS CREDITS TOOL TIPS ***** */
+		// Tom Select – opens to the left
+		tippy('[data-lib="tom-select"]', {
+		  theme: 'credits',
+		  placement: 'left',
+		  allowHTML: true,
+		  interactive: true,
+		  maxWidth: 320,
+		  animation: 'scale-subtle',
+		  content: `
+			<div style="text-align:left; line-height:1.45; font-size:0.9rem;">
+			  <strong>Tom Select</strong><br>
+			  <a href="https://tom-select.js.org/" target="_blank" rel="noopener" style="color:#2b6cb0;">tom-select.js.org</a><br>
+			  License: Apache License 2.0<br>
+			  <span style="opacity:0.85; font-size:0.85em;">Copyright © Tom Select Contributors</span>
+			</div>`
+		});
+
+		// Tippy.js – opens to the right
+		tippy('[data-lib="tippy"]', {
+		  theme: 'credits',
+		  placement: 'right',
+		  allowHTML: true,
+		  interactive: true,
+		  maxWidth: 320,
+		  animation: 'scale-subtle',
+		  content: `
+			<div style="text-align:left; line-height:1.45; font-size:0.9rem;">
+			  <strong>Tippy.js</strong><br>
+			  <a href="https://atomiks.github.io/tippyjs/" target="_blank" rel="noopener" style="color:#2b6cb0;">atomiks.github.io/tippyjs</a><br>
+			  License: MIT License<br>
+			  <span style="opacity:0.85; font-size:0.85em;">Copyright © atomiks</span>
+			</div>`
+		});	
+		
+		
+		
+
+		// Live preview
+		function updateSentence() {
+		  const vals = selects.map(id => {
+			const val = instances[id] ? instances[id].getValue() : '';
+			return val ? val : '_____';
+		  });
+
+		  document.getElementById('live-sentence').textContent =
+			`If I am to be ${vals[0]} for the ${vals[1]} aspects of my ${vals[2]}, ${vals[3]} and ${vals[4]}... if at any moment I attempt to not face the parts that are ${vals[5]} then I would be responsible for inhibiting my own growth.`;
+		}
+
+		selects.forEach(id => {
+		  instances[id].on('change', updateSentence);
+		});
+
+		updateSentence();
+	</script>
+	
+	<script>
+	/* ****** THEME TOGGLER TOOL: TOP RIGHT ***** */
+	
+	
+		// Initialization: Sets Default Theme (Blue / Custom)
+		let currentTippyTheme = 'kentucky';    
+		
+		const themeButtons = document.querySelectorAll('.theme-btn[data-theme]');
+		const customColorInput = document.getElementById('customColor');
+
+		function setTheme(theme, customColor = null) {
+		
+			  // Remove previous theme classes
+			  document.body.classList.remove('theme-green');
+			  document.body.classList.remove('theme-chiffon');
+			  
+			  if (theme === 'green') {
+				currentTippyTheme = 'kermit';
+				document.body.classList.add('theme-green')
+
+			  } else if (theme === 'chiffon') {
+				currentTippyTheme = 'chiffon';
+				document.body.classList.add('theme-chiffon');
+				document.documentElement.style.removeProperty('--accent');
+				document.documentElement.style.removeProperty('--accent-dark');
+				document.documentElement.style.removeProperty('--preview-bg');
+				document.documentElement.style.removeProperty('--preview-border');
+				document.documentElement.style.removeProperty('--top-gradient');
+				document.documentElement.style.removeProperty('--select-bg');
+				document.documentElement.style.removeProperty('--select-color');
+				document.documentElement.style.removeProperty('--select-og-header-bg');
+				document.documentElement.style.removeProperty('--select-og-header-color');	
+				
+			  } else if (theme === 'custom' && customColor) {
+				// Convert hex to derived colors
+				document.documentElement.style.setProperty('--accent', customColor);
+				document.documentElement.style.setProperty('--preview-border', customColor);
+				document.documentElement.style.setProperty('--select-bg', lightenColor(customColor, 70));
+				document.documentElement.style.setProperty('--select-color', darkenColor(customColor, 30));
+				document.documentElement.style.setProperty('--select-og-header-color', lightenColor(customColor, 36));
+				document.documentElement.style.setProperty('--select-og-header-bg', customColor);			
+				// Simple darken for heading
+				document.documentElement.style.setProperty('--accent-dark', darkenColor(customColor, 25));
+				document.documentElement.style.setProperty('--preview-bg', lightenColor(customColor, 92));
+				document.documentElement.style.setProperty('--top-gradient', customColor);
+				
+			  } else {
+				// Blue (reset to defaults)
+				currentTippyTheme = 'kentucky';
+				document.documentElement.style.removeProperty('--accent');
+				document.documentElement.style.removeProperty('--accent-dark');
+				document.documentElement.style.removeProperty('--preview-bg');
+				document.documentElement.style.removeProperty('--preview-border');
+				document.documentElement.style.removeProperty('--top-gradient');
+				document.documentElement.style.removeProperty('--select-bg');
+				document.documentElement.style.removeProperty('--select-color');
+				document.documentElement.style.removeProperty('--select-og-header-bg');
+				document.documentElement.style.removeProperty('--select-og-header-color');
+			  }
+	  
+	 
+			  
+			  // Update active button
+			  themeButtons.forEach(btn => {
+				btn.classList.toggle('active', btn.dataset.theme === theme);
+			  });
+
+			  // Save preference
+			  localStorage.setItem('preferred-theme', theme);
+			  if (customColor) localStorage.setItem('custom-color', customColor);
+		}
+
+		// Helper functions
+		function darkenColor(hex, percent) {
+		  // Simple darken helper
+		  const num = parseInt(hex.slice(1), 16);
+		  const amt = Math.round(2.55 * percent);
+		  const R = (num >> 16) - amt;
+		  const G = (num >> 8 & 0x00FF) - amt;
+		  const B = (num & 0x0000FF) - amt;
+		  return `#${(0x1000000 + (R < 0 ? 0 : R) * 0x10000 + (G < 0 ? 0 : G) * 0x100 + (B < 0 ? 0 : B)).toString(16).slice(1)}`;
+		}
+
+		function lightenColor(hex, percent) {
+		  const num = parseInt(hex.slice(1), 16);
+		  const amt = Math.round(2.55 * percent);
+		  const R = (num >> 16) + amt;
+		  const G = (num >> 8 & 0x00FF) + amt;
+		  const B = (num & 0x0000FF) + amt;
+		  return `#${(0x1000000 + (R > 255 ? 255 : R) * 0x10000 + (G > 255 ? 255 : G) * 0x100 + (B > 255 ? 255 : B)).toString(16).slice(1)}`;
+		}
+
+		// Event listeners
+		themeButtons.forEach(btn => {
+		  btn.addEventListener('click', () => setTheme(btn.dataset.theme));
+		});
+
+		customColorInput.addEventListener('input', (e) => {
+		  setTheme('custom', e.target.value);
+		});
+		
+
+		// Load saved preference on page load
+		const savedTheme = localStorage.getItem('preferred-theme') || 'blue';
+		const savedColor = localStorage.getItem('custom-color');
+		if (savedTheme === 'custom' && savedColor) {
+		  customColorInput.value = savedColor;
+		  setTheme('custom', savedColor);
+		} else {
+		  setTheme(savedTheme);
+		}
+	</script>
+</body>
+</html>
