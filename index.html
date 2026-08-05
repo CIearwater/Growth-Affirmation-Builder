@@ -887,7 +887,8 @@ selectData.blank5 = selectData.blank3;
 
 		  document.getElementById('live-sentence').innerHTML =
 			`If I am to be <span class="chefs-kiss">${vals[0].toLowerCase()}</span> for the <span class="chefs-kiss">${vals[1].toLowerCase()}</span> aspects of my <span class="chefs-kiss">${vals[2].toLowerCase()}</span>, <span class="chefs-kiss">${vals[3].toLowerCase()}</span> and <span class="chefs-kiss">${vals[4].toLowerCase()}</span>... if at any moment I attempt to not face the parts that are <span class="chefs-kiss">${vals[5].toLowerCase()}</span> then I would be responsible for inhibiting my own growth.`;
-
+		}
+			
 		selects.forEach(id => {
 		  instances[id].on('change', updateSentence);
 		});
