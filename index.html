@@ -40,7 +40,7 @@
 	  --select-og-header-bg: #0092d0;
 	  --select-og-header-color: #80daff;
 	}
-
+	  
 	body.theme-green {
 	  --accent: #64e142;
 	  --accent-dark: #32b02b;
@@ -236,7 +236,12 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       font-size: 0.95rem;
     }
-	
+
+	.ts-dropdown-content {
+		/* OVERRIDES 'Tom Select' DDEFAULT  LIBRARY SETTING: Increase height of select drop down */
+		max-height: 300px;
+	}
+	  
     .ts-dropdown .optgroup-header {
       background: var(--select-og-header-bg);
       color: var(--select-og-header-color);
